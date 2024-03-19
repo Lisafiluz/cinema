@@ -25,7 +25,7 @@ public class MovieServiceImpl implements MovieService {
 	@Override
 	public MovieDto getMovie(Integer id) {
 		Optional<Movie> movie = movieRepository.findById(id);
-		return movie.map(MovieMapper.INSTANCE::movieToMovieDto).orElse(null);
+		return MovieMapper.INSTANCE.movieToMovieDto(movie.orElse(null));
 	}
 	
 	@Override
