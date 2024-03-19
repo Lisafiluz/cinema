@@ -23,7 +23,7 @@ public class UserService {
 	public UserDto getUser(Integer id) {
 		//validation
 		User user = userRepository.findById(id).orElse(null);
-//		User user = null;
+//		User users = null;
 		if (user == null) {
 			return null; //maybe exception
 		}
@@ -36,9 +36,9 @@ public class UserService {
 		return users.stream().map(this::mapUserToUserDto).collect(Collectors.toList());
 	}
 	
-//	public void saveUser(User user) {
-//		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-//		userRepository.save(user);
+//	public void saveUser(User users) {
+//		users.setPassword(bCryptPasswordEncoder.encode(users.getPassword()));
+//		userRepository.save(users);
 //	}
 	
 	
@@ -47,8 +47,6 @@ public class UserService {
 		UserDto res = new UserDto();
 		res.setId(user.getId());
 		res.setUsername(user.getUsername());
-		res.setAdmin(user.isAdmin());
-		
 		return res;
 	}
 }
