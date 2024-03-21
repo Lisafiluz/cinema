@@ -5,7 +5,7 @@ import java.util.List;
 import com.cinema.dto.MovieDto;
 
 public interface MovieService {
-	public MovieDto getMovie(Integer id);
+	MovieDto getMovie(Integer id);
 	
 	List<MovieDto> getPopularMovies();
 	

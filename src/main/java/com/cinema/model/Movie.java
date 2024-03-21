@@ -8,11 +8,18 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "movie")
+@Table(name = "movies")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Movie {
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "movie_id", nullable = false)
 	private int movieId;
 	
@@ -34,97 +41,27 @@ public class Movie {
 	@Column(name = "trailer_url", length = 2083)
 	private String trailerUrl;
 	
+	@Column(name = "duration", nullable = false)
+	private int duration;
+	
 	@Column(name = "is_popular")
 	private Boolean isPopular;
 	
 	@Column(name = "review")
 	private Integer review;
 	
-	public Movie() {
-	}
-	
-	public Movie(int movieId, String title, String description, Date releaseDate, String genre, String picUrl, String trailerUrl, Boolean isPopular, Integer review) {
-		this.movieId = movieId;
-		this.title = title;
-		this.description = description;
-		this.releaseDate = releaseDate;
-		this.genre = genre;
-		this.picUrl = picUrl;
-		this.trailerUrl = trailerUrl;
-		this.isPopular = isPopular;
-		this.review = review;
-	}
-	
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public int getMovieId() {
-		return movieId;
-	}
-	
-	public void setMovieId(int id) {
-		this.movieId = id;
-	}
-	
-	public String getTitle() {
-		return title;
-	}
-	
-	public void setTitle(String title) {
-		this.title = title;
-	}
-	
-	public String getDescription() {
-		return description;
-	}
-	
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	
-	public Date getReleaseDate() {
-		return releaseDate;
-	}
-	
-	public void setReleaseDate(Date releaseDate) {
-		this.releaseDate = releaseDate;
-	}
-	
-	public String getGenre() {
-		return genre;
-	}
-	
-	public void setGenre(String genre) {
-		this.genre = genre;
-	}
-	
-	public String getPicUrl() {
-		return picUrl;
-	}
-	
-	public void setPicUrl(String picUrl) {
-		this.picUrl = picUrl;
-	}
-	
-	public String getTrailerUrl() {
-		return trailerUrl;
-	}
-	
-	public void setTrailerUrl(String trailerUrl) {
-		this.trailerUrl = trailerUrl;
-	}
-	
-	public Boolean getPopular() {
-		return isPopular;
-	}
-	
-	public void setPopular(Boolean popular) {
-		isPopular = popular;
-	}
-	
-	public Integer getReview() {
-		return review;
-	}
-	
-	public void setReview(Integer review) {
-		this.review = review;
+	@Override
+	public String toString() {
+		return "Movie{" +
+					 "movieId=" + movieId +
+					 ", title='" + title + '\'' +
+					 ", description='" + description + '\'' +
+					 ", releaseDate=" + releaseDate +
+					 ", genre='" + genre + '\'' +
+					 ", picUrl='" + picUrl + '\'' +
+					 ", trailerUrl='" + trailerUrl + '\'' +
+					 ", isPopular=" + isPopular +
+					 ", review=" + review +
+					 '}';
 	}
 }

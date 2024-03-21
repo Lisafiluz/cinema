@@ -11,9 +11,7 @@ import com.cinema.model.Movie;
 public interface MovieMapper {
 	MovieMapper INSTANCE = Mappers.getMapper(MovieMapper.class);
 	
-	@Mapping(source = "popular", target = "isPopular")
 	MovieDto movieToMovieDto(Movie movie);
 	
-	@Mapping(source = "isPopular", target = "popular")
 	Movie movieDtoToMovie(MovieDto dto);
 }
