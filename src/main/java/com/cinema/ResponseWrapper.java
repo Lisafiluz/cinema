@@ -19,6 +19,14 @@ public class ResponseWrapper<T> implements Serializable{
 		this.entities = entities;
 	}
 	
+//	private ResponseWrapper(int responseCode, String responseMessage, boolean success, List<T> entities) {
+//		this.responseCode = responseCode;
+//		this.responseMessage = responseMessage;
+//		this.success = success;
+//		this.entities = entities;
+//		this.warnings = Collections.emptyList();
+//	}
+	
 	public static <T> ResponseWrapper<T> success(List<T> entities) {
 		return new ResponseWrapper<>(SUCCESS, OK, entities);
 	}
@@ -28,6 +36,10 @@ public class ResponseWrapper<T> implements Serializable{
 			return success();
 		}
 		return success(Collections.singletonList(entity));
+	}
+	
+	public static <E> ResponseWrapper<E> failed(String errorMessage) {
+		return new ResponseWrapper<>(false, errorMessage, Collections.emptyList());
 	}
 	
 	public static <T> ResponseWrapper<T> success() {

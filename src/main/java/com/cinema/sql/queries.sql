@@ -1,9 +1,9 @@
 DROP TABLE IF EXISTS users CASCADE;
 CREATE TABLE users
 (
-    user_id  int         NOT NULL,
+    user_id  SERIAL NOT NULL,
     username varchar(25) NOT NULL unique,
-    password varchar(30) NOT NULL,
+    password varchar(120) NOT NULL,
     PRIMARY KEY (user_id)
 );
 
