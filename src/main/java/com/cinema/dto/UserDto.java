@@ -1,11 +1,12 @@
 package com.cinema.dto;
 
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 public class UserDto {
 	
 	private int id;
 	private String username;
-	private boolean isAdmin;
 	
 	public int getId() {
 		return id;
@@ -23,11 +24,4 @@ public class UserDto {
 		this.username = username;
 	}
 	
-	public boolean isAdmin() {
-		return isAdmin;
-	}
-	
-	public void setAdmin(boolean admin) {
-		isAdmin = admin;
-	}
 }
