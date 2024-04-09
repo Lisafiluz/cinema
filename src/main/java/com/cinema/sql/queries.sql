@@ -150,3 +150,27 @@ CREATE TABLE orders
 );
 
 
+select s1_0.screen_id,
+       s1_0.timestamp,
+       h1_0.hall_id,
+       h1_0.cols_count,
+       h1_0.name,
+       h1_0.rows_count,
+       m1_0.movie_id,
+       m1_0.description,
+       m1_0.duration,
+       m1_0.genre,
+       m1_0.is_popular,
+       m1_0.pic_url,
+       m1_0.release_date,
+       m1_0.review,
+       m1_0.title,
+       m1_0.trailer_url,
+       s.seat_id
+
+from screens s1_0
+         left join halls h1_0 on h1_0.hall_id = s1_0.hall_id
+         left join movies m1_0 on m1_0.movie_id = s1_0.movie_id
+        left join seats s on s1_0.screen_id = s.screen_id
+where s1_0.screen_id=1
+

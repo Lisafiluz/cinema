@@ -102,24 +102,23 @@ CREATE TABLE screens
     screen_id int  NOT NULL,
     movie_id  int,
     hall_id   int,
-    date      DATE NOT NULL,
-    time      TIME NOT NULL,
+    timestamp   timestamp NOT NULL,
     FOREIGN KEY (movie_id) REFERENCES movies (movie_id),
     FOREIGN KEY (hall_id) REFERENCES halls (hall_id),
     PRIMARY KEY (screen_id)
 );
 
-INSERT INTO screens (screen_id, movie_id, hall_id, date, time)
-VALUES (1, 2, 1, '2024-03-20', '12:00'),
-       (2, 1, 2, '2024-03-21', '15:30'),
-       (3, 3, 3, '2024-03-22', '18:45'),
-       (4, 4, 4, '2024-03-23', '21:00'),
-       (5, 8, 5, '2024-03-24', '13:20'),
-       (6, 3, 1, '2024-03-25', '16:10'),
-       (7, 4, 2, '2024-03-26', '19:25'),
-       (8, 5, 3, '2024-03-27', '22:30'),
-       (9, 8, 4, '2024-03-28', '14:40'),
-       (10, 3, 5, '2024-03-29', '17:55');
+INSERT INTO screens (screen_id, movie_id, hall_id, timestamp)
+VALUES (1, 2, 1, '2024-03-20 12:00:00'),
+       (2, 1, 2, '2024-03-21 15:30:00'),
+       (3, 3, 3, '2024-03-22 18:45:00'),
+       (4, 4, 4, '2024-03-23 21:00:00'),
+       (5, 8, 5, '2024-03-24 13:20:00'),
+       (6, 3, 1, '2024-03-25 16:10:00'),
+       (7, 4, 2, '2024-03-26 19:25:00'),
+       (8, 5, 3, '2024-03-27 22:30:00'),
+       (9, 8, 4, '2024-03-28 14:40:00'),
+       (10, 3, 5, '2024-03-29 17:55:00');
 
 
 DROP TABLE IF EXISTS seats CASCADE;
@@ -133,6 +132,18 @@ CREATE TABLE seats
     PRIMARY KEY (seat_id),
     FOREIGN KEY (screen_id) REFERENCES screens (screen_id)
 );
+
+INSERT INTO seats (seat_id, screen_id, row, seat_number, status)
+VALUES (1, 1, 1, 1, 'available'),
+       (2, 1, 1, 2, 'available'),
+       (3, 1, 1, 3, 'available'),
+       (4, 1, 2, 1, 'booked'),
+       (5, 1, 2, 2, 'available'),
+       (6, 1, 2, 3, 'available'),
+       (7, 2, 1, 1, 'available'),
+       (8, 2, 1, 2, 'booked'),
+       (9, 2, 1, 3, 'available'),
+       (10, 2, 2, 1, 'available');
 
 DROP TABLE IF EXISTS orders CASCADE;
 CREATE TABLE orders
