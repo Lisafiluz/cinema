@@ -166,11 +166,17 @@ select s1_0.screen_id,
        m1_0.review,
        m1_0.title,
        m1_0.trailer_url,
-       s.seat_id
-
+       s2_0.screen_id,
+       s2_0.seat_id,
+       s2_0.row,
+       s2_0.seat_number,
+       s2_0.status
 from screens s1_0
          left join halls h1_0 on h1_0.hall_id = s1_0.hall_id
          left join movies m1_0 on m1_0.movie_id = s1_0.movie_id
-        left join seats s on s1_0.screen_id = s.screen_id
-where s1_0.screen_id=1
+         left join seats s2_0 on s1_0.screen_id = s2_0.screen_id
+where s1_0.screen_id=1;
 
+select s1_0.screen_id, s1_0.seat_id, s1_0.row, s1_0.seat_number, s1_0.status
+from seats s1_0
+where s1_0.screen_id=1;

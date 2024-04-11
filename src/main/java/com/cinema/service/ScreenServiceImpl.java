@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cinema.dto.ScreenDto;
+import com.cinema.enums.ServiceResponseCode;
+import com.cinema.exception.ServiceException;
 import com.cinema.mapper.ScreenMapper;
 import com.cinema.model.Screen;
 import com.cinema.repository.ScreenRepository;
@@ -21,8 +23,11 @@ public class ScreenServiceImpl implements ScreenService {
 	}
 	
 	@Override
-	public ScreenDto getScreen(Integer screenId) {
+	public ScreenDto getScreen(Integer screenId) throws ServiceException {
 		Optional<Screen> screen = screenRepository.findById(screenId);
-		return ScreenMapper.INSTANCE.screenToScreenDto(screen.orElse(null));
+		if (screen.isEmpty()) {
+			throw new ServiceException(ServiceResponseCode.ERROR_NOT_FOUND, "The Screen was not found");
+		}
+		return ScreenMapper.INSTANCE.screenToScreenDto(screen.get());
 	}
 }

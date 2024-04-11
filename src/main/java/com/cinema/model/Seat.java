@@ -5,6 +5,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,7 +28,7 @@ public class Seat {
 	@Column(name = "seat_id", nullable = false)
 	private int seatId;
 	
-	@Column(name = "screen_id")
+	@JoinColumn(name = "screen_id")
 	private int screenId;
 	
 	@Column(name = "row", nullable = false)

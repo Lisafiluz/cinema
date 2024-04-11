@@ -128,22 +128,22 @@ CREATE TABLE seats
     screen_id   int,
     row         int         NOT NULL,
     seat_number int         NOT NULL,
-    status      VARCHAR(10) NOT NULL,
+    status      VARCHAR(20) NOT NULL,
     PRIMARY KEY (seat_id),
     FOREIGN KEY (screen_id) REFERENCES screens (screen_id)
 );
 
 INSERT INTO seats (seat_id, screen_id, row, seat_number, status)
-VALUES (1, 1, 1, 1, 'available'),
-       (2, 1, 1, 2, 'available'),
-       (3, 1, 1, 3, 'available'),
-       (4, 1, 2, 1, 'booked'),
-       (5, 1, 2, 2, 'available'),
-       (6, 1, 2, 3, 'available'),
-       (7, 2, 1, 1, 'available'),
-       (8, 2, 1, 2, 'booked'),
-       (9, 2, 1, 3, 'available'),
-       (10, 2, 2, 1, 'available');
+VALUES (1, 1, 1, 1, 'AVAILABLE'),
+       (2, 1, 1, 2, 'AVAILABLE'),
+       (3, 1, 1, 3, 'AVAILABLE'),
+       (4, 1, 2, 1, 'BOOKED'),
+       (5, 1, 2, 2, 'AVAILABLE'),
+       (6, 1, 2, 3, 'AVAILABLE'),
+       (7, 2, 1, 1, 'AVAILABLE'),
+       (8, 2, 1, 2, 'BOOKED'),
+       (9, 2, 1, 3, 'AVAILABLE'),
+       (10, 2, 2, 1, 'AVAILABLE');
 
 DROP TABLE IF EXISTS orders CASCADE;
 CREATE TABLE orders
