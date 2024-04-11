@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cinema.ResponseWrapper;
 import com.cinema.dto.ScreenDto;
+import com.cinema.exception.ServiceException;
 import com.cinema.service.ScreenService;
 
 @RestController
@@ -24,7 +25,7 @@ public class ScreenController {
 	
 	@GetMapping("/{id}")
 	@ResponseBody
-	public ResponseWrapper<ScreenDto> getScreen(@PathVariable Integer id) {
+	public ResponseWrapper<ScreenDto> getScreen(@PathVariable Integer id) throws ServiceException {
 		ScreenDto screenDto = screenService.getScreen(id);
 		return ResponseWrapper.success(screenDto);
 	}

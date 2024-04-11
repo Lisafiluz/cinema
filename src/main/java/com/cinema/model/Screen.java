@@ -6,6 +6,7 @@ import java.util.Set;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -39,8 +40,7 @@ public class Screen {
 	@JoinColumn(name = "hall_id", referencedColumnName = "hall_id")
 	private Hall hall;
 	
-//	todo: fix here
-	@OneToMany(mappedBy = "seatId", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "screenId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	Set<Seat> seats;
 	
 	@Temporal(TemporalType.TIMESTAMP)
