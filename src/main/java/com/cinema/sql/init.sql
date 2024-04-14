@@ -148,13 +148,12 @@ VALUES (1, 1, 1, 1, 'AVAILABLE'),
 DROP TABLE IF EXISTS orders CASCADE;
 CREATE TABLE orders
 (
-    order_id   int    not null,
     user_id    int,
     screen_id  int,
     seat_id    int,
     order_time bigint NOT NULL,
     quantity   int    NOT NULL,
-    primary key (order_id),
+    primary key (user_id, seat_id),
     foreign key (user_id) references users (user_id),
     foreign key (screen_id) references screens (screen_id),
     foreign key (seat_id) references seats (seat_id)
