@@ -153,6 +153,7 @@ CREATE TABLE orders
     seat_id    int,
     order_time bigint NOT NULL,
     quantity   int    NOT NULL,
+    order_id   serial    NOT NULL,
     primary key (user_id, seat_id),
     foreign key (user_id) references users (user_id),
     foreign key (screen_id) references screens (screen_id),

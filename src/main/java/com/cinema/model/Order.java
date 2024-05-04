@@ -45,6 +45,16 @@ public class Order {
 	@Column(name = "quantity", nullable = false)
 	private int quantity;
 	
+	@Column(name = "order_id", nullable = false)
+	private int orderId;
+	
+	public Order(Integer userId, int seatId, int screenId, long orderDate, int size) {
+		this.userId = userId;
+		this.seatId = seatId;
+		this.screenId = screenId;
+		
+	}
+	
 	@Override
 	public String toString() {
 		return "Order{" +
@@ -53,6 +63,7 @@ public class Order {
 					 ", screenId=" + screenId +
 					 ", date=" + date +
 					 ", quantity=" + quantity +
+					 ", orderId=" + orderId +
 					 '}';
 	}
 }
