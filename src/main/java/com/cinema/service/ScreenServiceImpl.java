@@ -1,7 +1,9 @@
 package com.cinema.service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,5 +46,11 @@ public class ScreenServiceImpl implements ScreenService {
 		return screens.stream()
 				.map(ScreenMapper.INSTANCE::screenToScreenDto)
 				.collect(Collectors.toList());
+	}
+	
+	@Override
+	public Map<Integer, ScreenDto> getScreenIdToScreenDto(Set<Integer> screenIds) {
+		List<Screen> screens = screenRepository.findAllById(screenIds);
+		return screens.stream().map(ScreenMapper.INSTANCE::screenToScreenDto).collect(Collectors.toMap((ScreenDto::getScreenId), b -> b));
 	}
 }

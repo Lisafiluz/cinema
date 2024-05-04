@@ -180,3 +180,6 @@ where s1_0.screen_id=1;
 select s1_0.screen_id, s1_0.seat_id, s1_0.row, s1_0.seat_number, s1_0.status
 from seats s1_0
 where s1_0.screen_id=1;
+
+
+select order_id from orders order by order_id desc
