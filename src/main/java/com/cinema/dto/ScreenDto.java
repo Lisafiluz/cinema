@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ScreenDto {
 	
+	private int screenId;
 	private MovieDto movie;
 	private HallDto hall;
 	private Date date;

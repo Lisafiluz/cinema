@@ -124,7 +124,7 @@ VALUES (1, 2, 1, '2024-03-20 12:00:00'),
 DROP TABLE IF EXISTS seats CASCADE;
 CREATE TABLE seats
 (
-    seat_id     int         NOT NULL,
+    seat_id     serial         NOT NULL,
     screen_id   int,
     row         int         NOT NULL,
     seat_number int         NOT NULL,
