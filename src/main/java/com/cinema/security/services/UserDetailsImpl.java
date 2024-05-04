@@ -7,8 +7,11 @@ import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.cinema.enums.ServiceResponseCode;
+import com.cinema.exception.ServiceException;
 import com.cinema.model.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -77,6 +80,13 @@ public class UserDetailsImpl implements UserDetails {
 		return true;
 	}
 	
+	public static UserDetailsImpl getUser() throws ServiceException {
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if (principal == "anonymousUser") {
+			throw new ServiceException(ServiceResponseCode.ERROR_INTERNAL_SERVER_ERROR, "No logged in user has found");
+		}
+		return (UserDetailsImpl) principal;
+	}
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)

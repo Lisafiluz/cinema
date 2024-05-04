@@ -21,7 +21,7 @@ public class WebConfig implements WebMvcConfigurer {
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		// Configure public access for specific endpoints
-		registry.addResourceHandler("/**")
+		registry.addResourceHandler("/screen/**", "/movie/**")
 						.addResourceLocations("classpath:/public/")
 						.setCachePeriod(3600)
 						.resourceChain(true);
