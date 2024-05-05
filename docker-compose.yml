@@ -24,6 +24,15 @@ services:
     volumes:
       - ./src/main/java/com/cinema/sql/init.sql:/docker-entrypoint-initdb.d/init.sql
       - postgres_data:/var/lib/postgresql/data
-
+  ui:
+    build:
+      context: ./src/main/resources/cinema-ui
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - app
+    environment:
+      - REACT_APP_SERVER_URL=http://localhost:8080
 volumes:
   postgres_data:
