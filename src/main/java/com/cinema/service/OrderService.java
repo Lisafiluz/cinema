@@ -12,4 +12,10 @@ public interface OrderService {
 	ResponseWrapper<Void> placeOrder(OrderRequest orderRequest) throws ServiceException;
 	
 	List<OrderDto> getOrdersByUser(Integer userId);
+	
+	void cancelSeat(Integer seatId) throws ServiceException;
+	
+	void cancelOrder(Integer orderId) throws ServiceException;
+	
+	List<OrderDto> getAllOrders();
 }

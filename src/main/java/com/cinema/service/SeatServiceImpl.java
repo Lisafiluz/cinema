@@ -2,6 +2,7 @@ package com.cinema.service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cinema.dto.SeatDto;
+import com.cinema.enums.ServiceResponseCode;
+import com.cinema.exception.ServiceException;
 import com.cinema.mapper.SeatMapper;
 import com.cinema.model.Seat;
 import com.cinema.repository.SeatRepository;
@@ -36,5 +39,10 @@ public class SeatServiceImpl implements SeatService{
 	public Map<Integer, SeatDto> getSeatIdToSeatDto(Set<Integer> seatIds) {
 		List<Seat> seats = seatRepository.findAllById(seatIds);
 		return seats.stream().map(SeatMapper.INSTANCE::seatToSeatDto).collect(Collectors.toMap((SeatDto::getSeatId), b->b));
+	}
+	
+	@Override
+	public void deleteSeats(List<Integer> seatIds) throws ServiceException {
+		seatRepository.deleteAllById(seatIds);
 	}
 }

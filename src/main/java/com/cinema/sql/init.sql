@@ -43,7 +43,7 @@ CREATE TABLE movies
 (
     movie_id     int          NOT NULL,
     title        varchar(30)  NOT NULL,
-    description  varchar(30)  NOT NULL,
+    description  varchar(200)  NOT NULL,
     release_date date         NOT NULL,
     genre        varchar(100) NOT NULL,
     pic_url      varchar(2083),
@@ -56,26 +56,18 @@ CREATE TABLE movies
 
 -- GPT
 INSERT INTO movies(movie_id, title, description, release_date, genre, pic_url, trailer_url, duration, is_popular, review)
-VALUES (1, 'The Adventure Begins', 'An epic journey starts', '2021-05-15', 'Adventure', 'http://example.com/pic1.jpg',
-        'http://example.com/trailer1.mp4', 120, TRUE, 85),
-       (2, 'Comedy Nights', 'Laugh out loud', '2020-06-20', 'Comedy', 'http://example.com/pic2.jpg', 'http://example.com/trailer2.mp4', 96, FALSE,
-        75),
-       (3, 'Romance in Paris', 'A love story', '2019-02-14', 'Romance', 'http://example.com/pic3.jpg', 'http://example.com/trailer3.mp4', 118, TRUE,
-        90),
-       (4, 'Horror House', 'Prepare to be scared', '2022-10-31', 'Horror', 'http://example.com/pic4.jpg', 'http://example.com/trailer4.mp4', 102,
-        FALSE, 65),
-       (5, 'Sci-Fi Universe', 'Explore the unknown', '2023-01-01', 'Sci-Fi', 'http://example.com/pic5.jpg', 'http://example.com/trailer5.mp4', 101,
-        TRUE, 88),
-       (6, 'Mystery Island', 'Uncover the secrets', '2021-07-22', 'Mystery', 'http://example.com/pic6.jpg', 'http://example.com/trailer6.mp4', 90,
-        FALSE, 70),
-       (7, 'Action Heroes', 'Non-stop action', '2020-11-05', 'Action', 'http://example.com/pic7.jpg', 'http://example.com/trailer7.mp4', 100, TRUE,
-        92),
-       (8, 'Fantasy World', 'A magical tale', '2019-12-25', 'Fantasy', 'http://example.com/pic8.jpg', 'http://example.com/trailer8.mp4', 87, FALSE,
-        80),
-       (9, 'Drama Life', 'Intense and emotional', '2022-08-18', 'Drama', 'http://example.com/pic9.jpg', 'http://example.com/trailer9.mp4', 132, TRUE,
-        77),
-       (10, 'Documentary Earth', 'Our planet story', '2021-04-22', 'Documentary', 'http://example.com/pic10.jpg', 'http://example.com/trailer10.mp4',
-        115, FALSE, 82);
+VALUES
+    (1, 'The Odyssey', 'A thrilling adventure based on the epic poem', '2023-08-15', 'Adventure', 'https://example.com/pic11.jpg', 'https://example.com/trailer11.mp4', 150, TRUE, 92),
+    (2, 'Laugh Riot', 'An uproarious comedy that will leave you in stitches', '2024-01-25', 'Comedy', 'https://example.com/pic12.jpg', 'https://example.com/trailer12.mp4', 110, TRUE, 88),
+    (3, 'Love Eternal', 'A timeless romance set against the backdrop of a war-torn city', '2023-05-10', 'Romance', 'https://example.com/pic13.jpg', 'https://example.com/trailer13.mp4', 125, TRUE, 95),
+    (4, 'Nightmare House', 'A terrifying horror film that will haunt your dreams', '2024-10-31', 'Horror', 'https://example.com/pic14.jpg', 'https://example.com/trailer14.mp4', 105, TRUE, 85),
+    (5, 'Cosmic Odyssey', 'Embark on a journey through the cosmos in this mind-bending sci-fi epic', '2023-12-20', 'Sci-Fi', 'https://example.com/pic15.jpg', 'https://example.com/trailer15.mp4', 140, TRUE, 90),
+    (6, 'Murder Mystery', 'A gripping mystery that will keep you guessing until the very end', '2024-07-05', 'Mystery', 'https://example.com/pic16.jpg', 'https://example.com/trailer16.mp4', 120, TRUE, 88),
+    (7, 'Action Legends', 'Thrilling action sequences and pulse-pounding excitement await in this adrenaline-fueled spectacle', '2024-03-08', 'Action', 'https://example.com/pic17.jpg', 'https://example.com/trailer17.mp4', 130, TRUE, 90),
+    (8, 'Realm of Fantasy', 'Journey to a fantastical world filled with magic and wonder', '2023-09-01', 'Fantasy', 'https://example.com/pic18.jpg', 'https://example.com/trailer18.mp4', 135, TRUE, 92),
+    (9, 'Heartfelt Drama', 'An emotional drama that explores the complexities of human relationships', '2024-06-15', 'Drama', 'https://example.com/pic19.jpg', 'https://example.com/trailer19.mp4', 145, TRUE, 86),
+    (10, 'Earth Chronicles', 'A captivating documentary that delves into the history of our planet', '2023-04-12', 'Documentary', 'https://example.com/pic20.jpg', 'https://example.com/trailer20.mp4', 120, TRUE, 94);
+
 
 
 
@@ -107,6 +99,20 @@ CREATE TABLE screens
     FOREIGN KEY (hall_id) REFERENCES halls (hall_id),
     PRIMARY KEY (screen_id)
 );
+
+INSERT INTO screens(screen_id, movie_id, hall_id, timestamp)
+SELECT
+            ROW_NUMBER() OVER (ORDER BY movie_id, random()) AS screen_id,
+            movie_id,
+            FLOOR(RANDOM() * 5) + 1 AS hall_id,
+            TIMESTAMP '2024-07-16 00:00:00' +
+            INTERVAL '1 day' * FLOOR(RANDOM() * 100) +
+            INTERVAL '1 hour' * FLOOR(RANDOM() * 24) +
+            INTERVAL '1 minute' * FLOOR(RANDOM() * 60) AS timestamp
+FROM
+    (SELECT movie_id FROM movies) AS m
+        CROSS JOIN
+    generate_series(1, 3);
 
 INSERT INTO screens (screen_id, movie_id, hall_id, timestamp)
 VALUES (1, 2, 1, '2024-03-20 12:00:00'),
