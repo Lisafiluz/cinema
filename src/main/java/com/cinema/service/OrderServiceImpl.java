@@ -3,6 +3,7 @@ package com.cinema.service;
 import static java.util.stream.Collectors.groupingBy;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -71,9 +72,65 @@ public class OrderServiceImpl implements OrderService {
 		Map<Integer, ScreenDto> screenIdToScreenDto = screenService.getScreenIdToScreenDto(screenIds);
 		Map<Integer, SeatDto> seatIdToSeatDto = seatService.getSeatIdToSeatDto(seatIds);
 		
+		List<OrderDto> orders = new ArrayList<>();
+		// Collect response
+		fillOrders(orderIdToOrders, seatIdToSeatDto, screenIdToScreenDto, orders);
+		
+		return orders;
+	}
+	
+	@Override
+	public void cancelSeat(Integer seatId) throws ServiceException {
+		Order order = orderRepository.findBySeatId(seatId);
+		if (order == null) {
+			throw new ServiceException(ServiceResponseCode.ERROR_BAD_REQUEST, "The Order has not found!");
+		}
+		
+		int orderId = order.getOrderId();
+		
+		// delete order
+		//orderRepository.removeOrderByOrderId(orderId);
+		orderRepository.removeOrderBySeatId(order.getSeatId());
+		// update all others order's quantity
+		List<Order> orders = orderRepository.findAllByOrderId(orderId);
+		orders.forEach(t-> t.setQuantity(t.getQuantity()-1));
+		orderRepository.saveAll(orders);
+		// delete seat from Seat table
+		seatService.deleteSeats(Collections.singletonList(seatId));
+	}
+	
+	@Override
+	public void cancelOrder(Integer orderId) throws ServiceException {
+		List<Order> orders = orderRepository.findAllByOrderId(orderId);
+		if (orders.isEmpty()) {
+			throw new ServiceException(ServiceResponseCode.ERROR_BAD_REQUEST, "The Order has not found!");
+		}
+		
+		List<Integer> orderSeatIds = orders.stream().map(Order::getSeatId).toList();
+		// delete all orders with id
+		orderRepository.removeOrderByOrderId(orderId);
+		// delete all seats of the order
+		seatService.deleteSeats(orderSeatIds);
+	}
+	
+	@Override
+	public List<OrderDto> getAllOrders() {
+		//Fetch Data
+		List<Order> ordersByUserId = orderRepository.findAll();
+		Set<Integer> screenIds = ordersByUserId.stream().map(Order::getScreenId).collect(Collectors.toSet());
+		Set<Integer> seatIds = ordersByUserId.stream().map(Order::getSeatId).collect(Collectors.toSet());
+		Map<Integer, List<Order>> orderIdToOrders = ordersByUserId.stream().collect(groupingBy(Order::getOrderId));
+		Map<Integer, ScreenDto> screenIdToScreenDto = screenService.getScreenIdToScreenDto(screenIds);
+		Map<Integer, SeatDto> seatIdToSeatDto = seatService.getSeatIdToSeatDto(seatIds);
 		
 		List<OrderDto> orders = new ArrayList<>();
 		// Collect response
+		fillOrders(orderIdToOrders, seatIdToSeatDto, screenIdToScreenDto, orders);
+		
+		return orders;
+	}
+	
+	private void fillOrders(Map<Integer, List<Order>> orderIdToOrders, Map<Integer, SeatDto> seatIdToSeatDto, Map<Integer, ScreenDto> screenIdToScreenDto, List<OrderDto> orders) {
 		for (Map.Entry<Integer, List<Order>> entry : orderIdToOrders.entrySet()) {
 			Integer orderId = entry.getKey();
 			List<Order> innerOrders = entry.getValue();
@@ -82,8 +139,6 @@ public class OrderServiceImpl implements OrderService {
 			ScreenDto orderScreen = screenIdToScreenDto.get(orderCandidate.getScreenId());
 			orders.add(new OrderDto(orderCandidate.getUserId(), orderScreen, orderSeats, orderCandidate.getDate(), orderCandidate.getQuantity(), orderId));
 		}
-		
-		return orders;
 	}
 	
 	private void validateSeatsAreValid(HallDto hall, List<SeatRequest> orderSeats) throws ServiceException {
@@ -117,4 +172,5 @@ public class OrderServiceImpl implements OrderService {
 	private String getSeatKey(int row, int col) {
 		return row + "$" + col;
 	}
+	
 }
