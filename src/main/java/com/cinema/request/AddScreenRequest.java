@@ -1,15 +1,16 @@
-package com.cinema.dto;
+package com.cinema.request;
+
+import java.util.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class HallDto {
+@Data
+public class AddScreenRequest {
+	private Integer movieId;
 	private Integer hallId;
-	private String name;
-	private Integer rows;
-	private Integer cols;
+	private Date date;
 }

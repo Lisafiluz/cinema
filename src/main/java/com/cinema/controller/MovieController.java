@@ -47,7 +47,7 @@ public class MovieController {
 	
 	@PutMapping
 	@PreAuthorize("hasAnyRole('ADMIN')")
-	public ResponseWrapper<Void> updateMovie(@RequestBody UpdateMovieRequest updateMovieRequest) throws ServiceException {
+	public ResponseWrapper<Void> updateMovie(@RequestBody UpdateMovieRequest updateMovieRequest) throws ServiceException, IllegalAccessException {
 		movieService.updateMovie(updateMovieRequest);
 		return ResponseWrapper.success();
 	}

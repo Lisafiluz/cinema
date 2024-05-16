@@ -1,5 +1,6 @@
 package com.cinema.service;
 
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -50,13 +51,15 @@ public class MovieServiceImpl implements MovieService {
 	}
 	
 	@Override
-	public void updateMovie(UpdateMovieRequest updateMovieRequest) throws ServiceException {
+	public void updateMovie(UpdateMovieRequest updateMovieRequest) throws ServiceException, IllegalAccessException {
 		int movieId = updateMovieRequest.getMovieId();
 		Optional<Movie> existMovieOptional = movieRepository.findById(movieId);
 		
 		if (existMovieOptional.isEmpty()) {
 			throw new ServiceException(ServiceResponseCode.ERROR_BAD_REQUEST, "The movie has not found");
 		}
+		
+		validateMovieContent(updateMovieRequest);
 		//can validate here the correctness od the data
 		
 		Movie movieToUpdate = existMovieOptional.get();
@@ -71,5 +74,41 @@ public class MovieServiceImpl implements MovieService {
 		movieToUpdate.setReview(updateMovieRequest.getReview());
 		
 		movieRepository.save(movieToUpdate);
+	}
+	
+	private void validateMovieContent(UpdateMovieRequest movie) throws ServiceException {
+		if (!checkAllFieldsNotNull(movie)) {
+			throw new ServiceException(ServiceResponseCode.ERROR_INVALID_INPUT, "Invalid movie content - fields can't be null");
+		}
+		
+		if (movie.getDuration() <= 0) {
+			throw new ServiceException(ServiceResponseCode.ERROR_INVALID_INPUT, "Invalid movie content - duration can't be non-positive");
+		}
+		
+		if (movie.getReview() < 0 || movie.getReview() > 100) {
+			throw new ServiceException(ServiceResponseCode.ERROR_INVALID_INPUT, "Invalid movie content - review score must be in range of 0 to 100");
+		}
+		
+	}
+	
+	public static boolean checkAllFieldsNotNull(Object obj) throws ServiceException {
+		if (obj == null) {
+			return false;
+		}
+		
+		Class<?> clazz = obj.getClass();
+		Field[] fields = clazz.getDeclaredFields();
+		
+		for (Field field : fields) {
+			field.setAccessible(true);
+			try {
+				if (field.get(obj) == null || field.get(obj).equals("")) {
+					return false;
+				}
+			} catch (IllegalAccessException e) {
+				throw new ServiceException(ServiceResponseCode.ERROR_INVALID_INPUT, e.getMessage());
+			}
+		}
+		return true;
 	}
 }
