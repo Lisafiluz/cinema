@@ -57,16 +57,17 @@ CREATE TABLE movies
 -- GPT
 INSERT INTO movies(movie_id, title, description, release_date, genre, pic_url, trailer_url, duration, is_popular, review)
 VALUES
-    (1, 'The Odyssey', 'A thrilling adventure based on the epic poem', '2023-08-15', 'Adventure', 'https://example.com/pic11.jpg', 'https://example.com/trailer11.mp4', 150, TRUE, 92),
-    (2, 'Laugh Riot', 'An uproarious comedy that will leave you in stitches', '2024-01-25', 'Comedy', 'https://example.com/pic12.jpg', 'https://example.com/trailer12.mp4', 110, TRUE, 88),
-    (3, 'Love Eternal', 'A timeless romance set against the backdrop of a war-torn city', '2023-05-10', 'Romance', 'https://example.com/pic13.jpg', 'https://example.com/trailer13.mp4', 125, TRUE, 95),
-    (4, 'Nightmare House', 'A terrifying horror film that will haunt your dreams', '2024-10-31', 'Horror', 'https://example.com/pic14.jpg', 'https://example.com/trailer14.mp4', 105, TRUE, 85),
-    (5, 'Cosmic Odyssey', 'Embark on a journey through the cosmos in this mind-bending sci-fi epic', '2023-12-20', 'Sci-Fi', 'https://example.com/pic15.jpg', 'https://example.com/trailer15.mp4', 140, TRUE, 90),
-    (6, 'Murder Mystery', 'A gripping mystery that will keep you guessing until the very end', '2024-07-05', 'Mystery', 'https://example.com/pic16.jpg', 'https://example.com/trailer16.mp4', 120, TRUE, 88),
-    (7, 'Action Legends', 'Thrilling action sequences and pulse-pounding excitement await in this adrenaline-fueled spectacle', '2024-03-08', 'Action', 'https://example.com/pic17.jpg', 'https://example.com/trailer17.mp4', 130, TRUE, 90),
-    (8, 'Realm of Fantasy', 'Journey to a fantastical world filled with magic and wonder', '2023-09-01', 'Fantasy', 'https://example.com/pic18.jpg', 'https://example.com/trailer18.mp4', 135, TRUE, 92),
-    (9, 'Heartfelt Drama', 'An emotional drama that explores the complexities of human relationships', '2024-06-15', 'Drama', 'https://example.com/pic19.jpg', 'https://example.com/trailer19.mp4', 145, TRUE, 86),
-    (10, 'Earth Chronicles', 'A captivating documentary that delves into the history of our planet', '2023-04-12', 'Documentary', 'https://example.com/pic20.jpg', 'https://example.com/trailer20.mp4', 120, TRUE, 94);
+    (1, 'The Odyssey', 'A thrilling adventure based on the epic poem', '2023-08-15', 'Adventure', '1/1.jpg', '1/1.mp4', 150, TRUE, 92),
+    (2, 'Laugh Riot', 'An uproarious comedy that will leave you in stitches', '2024-01-25', 'Comedy', '2/2.jpg', '2/2.mp4', 110, TRUE, 88),
+    (3, 'Love Eternal', 'A timeless romance set against the backdrop of a war-torn city', '2023-05-10', 'Romance', '3/3.jpg', '3/3.mp4', 125, TRUE, 95),
+    (4, 'Nightmare House', 'A terrifying horror film that will haunt your dreams', '2024-10-31', 'Horror', '4/4.jpg', '4/4.mp4', 105, TRUE, 85),
+    (5, 'Cosmic Odyssey', 'Embark on a journey through the cosmos in this mind-bending sci-fi epic', '2023-12-20', 'Sci-Fi', '5/5.jpg', '5/5.mp4', 140, TRUE, 90),
+    (6, 'Murder Mystery', 'A gripping mystery that will keep you guessing until the very end', '2024-07-05', 'Mystery', '6/6.jpg', '6/6.mp4', 120, TRUE, 88),
+    (7, 'Action Legends', 'Thrilling action sequences and pulse-pounding excitement await in this adrenaline-fueled spectacle', '2024-03-08', 'Action', '7/7.jpg', '7/7.mp4', 130, TRUE, 90),
+    (8, 'Realm of Fantasy', 'Journey to a fantastical world filled with magic and wonder', '2023-09-01', 'Fantasy', '8/8.jpg', '8/8.mp4', 135, TRUE, 92),
+    (9, 'Heartfelt Drama', 'An emotional drama that explores the complexities of human relationships', '2024-06-15', 'Drama', '9/9.jpg', '9/9.mp4', 145, TRUE, 86),
+    (10, 'Earth Chronicles', 'A captivating documentary that delves into the history of our planet', '2023-04-12', 'Documentary', '10/10.jpg', '10/10.mp4', 120, TRUE, 94);
+
 
 
 
@@ -88,10 +89,11 @@ VALUES (1, 'Grand Ballroom', 20, 20),
        (4, 'Emerald Chamber', 10, 15),
        (5, 'Crystal Auditorium VIP', 7, 6);
 
+
 DROP TABLE IF EXISTS screens CASCADE;
 CREATE TABLE screens
 (
-    screen_id int  NOT NULL,
+    screen_id SERIAL  NOT NULL,
     movie_id  int,
     hall_id   int,
     timestamp   timestamp NOT NULL,
@@ -102,7 +104,8 @@ CREATE TABLE screens
 
 INSERT INTO screens(screen_id, movie_id, hall_id, timestamp)
 SELECT
-            ROW_NUMBER() OVER (ORDER BY movie_id, random()) AS screen_id,
+--             ROW_NUMBER() OVER (ORDER BY nextval(screens_screen_id_seq),
+            nextval('screens_screen_id_seq') AS screen_id ,
             movie_id,
             FLOOR(RANDOM() * 5) + 1 AS hall_id,
             TIMESTAMP '2024-07-16 00:00:00' +

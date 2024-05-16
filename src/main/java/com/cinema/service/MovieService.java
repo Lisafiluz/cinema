@@ -15,5 +15,5 @@ public interface MovieService {
 	
 	List<MovieDto> getAllMovies();
 	
-	void updateMovie(UpdateMovieRequest updateMovieRequest) throws ServiceException;
+	void updateMovie(UpdateMovieRequest updateMovieRequest) throws ServiceException, IllegalAccessException;
 }

@@ -17,20 +17,21 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "screens")
+@Table(name = "screens",uniqueConstraints = {@UniqueConstraint(columnNames = "screen_id")})
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Screen {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "screen_id", nullable = false)
-	private int screenId;
+	private Integer screenId;
 
 	@OneToOne
 	@JoinColumn(name = "movie_id", referencedColumnName = "movie_id")
