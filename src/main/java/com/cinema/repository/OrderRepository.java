@@ -13,6 +13,7 @@ import com.cinema.model.OrderId;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order, OrderId> {
+	
 	List<Order> getOrdersByUserId(Integer userId);
 	
 	@Query(value = "SELECT MAX(o.orderId) FROM Order o")
@@ -28,5 +29,4 @@ public interface OrderRepository extends JpaRepository<Order, OrderId> {
 	
 	List<Order> findAllByOrderId(int orderId);
 	
-	Optional<Order> findByOrderId(Integer orderId);
 }

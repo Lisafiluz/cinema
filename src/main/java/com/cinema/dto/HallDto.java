@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class HallDto {
+	
 	private Integer hallId;
 	private String name;
 	private Integer rows;

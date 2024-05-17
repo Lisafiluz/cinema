@@ -30,7 +30,6 @@ public class MovieController {
 		this.movieService = movieService;
 	}
 	
-	
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseWrapper<MovieDto> getMovie(@PathVariable Integer id) {

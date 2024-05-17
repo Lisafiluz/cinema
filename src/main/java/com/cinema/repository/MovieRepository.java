@@ -19,7 +19,4 @@ public interface MovieRepository extends JpaRepository<Movie, Integer> {
 	@Query("select '*' FROM Movie WHERE genre = 'action'")
 	List<Movie> getAllActionMovies();
 	
-	//	@Query("SELECT t FROM Tutorial t WHERE t.published=:isPublished AND t.level BETWEEN :start AND :end")
-	//List<Tutorial> findByLevelBetween(@Param("start") int start, @Param("end") int end, @Param("isPublished") boolean isPublished);
-	
 }

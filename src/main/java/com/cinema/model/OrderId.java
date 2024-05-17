@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class OrderId implements Serializable {
+	
 	private int userId;
 	private int seatId;
 	

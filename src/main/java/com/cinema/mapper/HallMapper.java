@@ -8,6 +8,7 @@ import com.cinema.model.Hall;
 
 @Mapper
 public interface HallMapper {
+	
 	HallMapper INSTANCE = Mappers.getMapper(HallMapper.class);
 	
 	HallDto hallToHallDto(Hall hall);

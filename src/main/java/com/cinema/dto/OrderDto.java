@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class OrderDto {
+	
 	private int userId;
 	private ScreenDto screen;
 	private List<SeatDto> seats;

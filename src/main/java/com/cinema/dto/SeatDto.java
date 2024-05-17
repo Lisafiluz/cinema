@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SeatDto {
+	
 	private int seatId;
 	private int screenId;
 	private int row;

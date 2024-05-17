@@ -2,7 +2,8 @@ package com.cinema.exception;
 
 import com.cinema.enums.ServiceResponseCode;
 
-public class ServiceRuntimeException extends RuntimeException{
+public class ServiceRuntimeException extends RuntimeException {
+	
 	private final ServiceResponseCode serviceResponseCode;
 	
 	public ServiceRuntimeException(ServiceResponseCode serviceResponseCode, String errorMessage) {

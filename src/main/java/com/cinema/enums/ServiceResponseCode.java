@@ -15,7 +15,6 @@ public enum ServiceResponseCode {
 	private final int code;
 	private final String message;
 	
-	
 	public int getCode() {
 		return code;
 	}
